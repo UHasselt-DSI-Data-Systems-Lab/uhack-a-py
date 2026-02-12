@@ -4,7 +4,7 @@ UHack-a-Py is een framework om simpel games te maken in Python, op basis van PyG
 Deze GitHub bevat het framework zelf en een aantal voorbeeldgames.
 
 ## Installatie
-1. Installeer het framework vanuit de [GitHub release](https://github.com/UHasselt-DSI-Data-Systems-Lab/ahack-a-py/releases).
+1. Installeer het framework vanuit de [GitHub release](https://github.com/UHasselt-DSI-Data-Systems-Lab/uhack-a-py/releases).
 2. Zorg dat je Python 3.10 of hoger hebt geïnstalleerd.
 3. Installeer de vereiste pakketten met pip:
 ```bash
