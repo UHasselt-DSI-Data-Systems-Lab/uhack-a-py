@@ -41,12 +41,8 @@ De 'escape'-toets sluit het spel altijd af.
 *   `/games`: Bevat de voorbeeldspellen en een sjabloon voor nieuwe spellen.
     *   `/games/your_project`: Een sjabloon voor je eigen spel.
     *   `/games/simple_game`: Een simpel voorbeeldspel.
-    *   Andere mappen bevatten de templates, inclusief hun guides/cheatsheets.
-*   `/Misc`: Bevat diverse bestanden. 
-    * general cheatsheet figure
-    * trophy.3mf
-    * Informatie.pptx: de informatie die aan de leerlingen werd meegedeeld.
-*   `/Portable Environment V2`: Bevat bestanden om een draagbare Thonny-omgeving op een USB-stick op te zetten.
+    *   `/games/bullet_hell`: De bullet-hell template, inclusief de guides en templates.
+    *   `/games/framework`: Het framework waarop de games werken.
 *   `documentation.md`: De documentatie voor het framework.
 *   `README.md`: Dit bestand.
 
