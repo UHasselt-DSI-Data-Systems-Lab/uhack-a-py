@@ -46,9 +46,6 @@ De 'escape'-toets sluit het spel altijd af.
 *   `documentation.md`: De documentatie voor het framework.
 *   `README.md`: Dit bestand.
 
-> [!WARNING]
-> De OOP-versies van de templates zijn nog niet afgewerkt!
-
 ## Documentatie
 
 Het framework voorziet enkele functies en variabelen die je kan gebruiken in je games.
