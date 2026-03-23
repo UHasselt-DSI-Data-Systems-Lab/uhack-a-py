@@ -9,9 +9,11 @@ Hieronder vind je een overzicht van de belangrijkste functies en variabelen die 
 - [Invoer](#invoer)
   - [```input(key)```](#inputkey)
   - [```input_once(key)```](#input_oncekey)
+  - [```mouse_position()```](#mouse_position)
+  - [```input_mouse(button)```](#input_mousebutton)
 - [Tekenen](#tekenen)
   - [```rectangle(x, y, width, height, color)```](#rectanglex-y-width-height-color)
-  - [```circle(x, y, width, height, color)```](#circlex-y-width-height-color)
+  - [```circle(x, y, radius, color)```](#circlex-y-width-height-color)
   - [```image(image_name, x, y, w, h, transforms=[])```](#imageimage_name-x-y-w-h-transforms)
   - [```text(x, y, content, color, size=30, align="topleft")```](#textx-y-content-color-size30-aligntopleft)
 - [Interactie](#interactie)
@@ -66,6 +68,31 @@ Parameters:
 
 ---
 
+### ```mouse_position()```
+Deze functie geeft de huidige positie van de muis terug als een `Vector`.
+
+> Voorbeeld van gebruik:
+> ```python
+> muis_positie = mouse_position()
+> print(f"Muis positie: {muis_positie.x}, {muis_positie.y}")
+> ```
+
+---
+
+### ```input_mouse(button)```
+Deze functie controleert of een specifieke muisknop is ingedrukt.
+
+Parameters:
+- `button`: De knop die je wilt controleren (0 = links, 1 = midden, 2 = rechts).
+
+> Voorbeeld van gebruik:
+> ```python
+> if input_mouse(0):
+>     # Code om te reageren op een linkermuisknopklik
+> ```
+
+---
+
 ## Tekenen
 ### ```rectangle(x, y, width, height, color)```
 Deze functie tekent een rechthoek op het scherm. Je kunt deze gebruiken om eenvoudige vormen te tekenen, zoals platforms, muren of andere objecten in je game.
@@ -84,19 +111,18 @@ Parameters:
 
 ---
 
-### ```circle(x, y, width, height, color)```
+### ```circle(x, y, radius, color)```
 Deze functie tekent een cirkel op het scherm. Je kunt deze gebruiken om ronde objecten te tekenen, zoals ballen of planeten.
 
 Parameters:
 - `x`: De x-coördinaat van het midden van de cirkel.
 - `y`: De y-coördinaat van het midden van de cirkel.
-- `width`: De breedte van de cirkel (de diameter in de x-richting).
-- `height`: De hoogte van de cirkel (de diameter in de y-richting).
+- `radius`: De straal van de cirkel.
 - `color`: De kleur van de cirkel, opgegeven als een tuple van RGB-waarden (bijvoorbeeld `(255, 0, 0)` voor rood). Het framework voorziet een aantal [standaard kleuren](games/framework/colors.py), die kan je gebruiken door `colors.RED` te gebruiken in plaats van een RGB-tuple.
 
 > Voorbeeld van gebruik:
 > ```python
-> circle(200, 200, 50, 50, colors.GREEN)  # Tekent een groene cirkel
+> circle(200, 200, 50, colors.GREEN)  # Tekent een groene cirkel
 > ```
 
 ---
@@ -150,7 +176,7 @@ Parameters:
 ### ```colide(object1, object2)```
 Deze functie controleert of twee objecten met elkaar botsen. Je kunt deze gebruiken om interacties tussen objecten in je game te detecteren, zoals het raken van een vijand of het oppakken van een item.
 Parameters:
-- `object1`: Het eerste object dat je wilt controleren. Dit kan een rechthoek, cirkel of afbeelding zijn.
+- `object1`: Het eerste object dat je wilt controleren. Dit kan een rechthoek, cirkel, afbeelding of `Vector` zijn.
 - `object2`: Het tweede object dat je wilt controleren.
 
 > Voorbeeld van gebruik:
@@ -202,3 +228,4 @@ Deze variabele geeft de hoogte van het spelvenster aan. Je kunt deze gebruiken o
 > ```
 
 ---
+

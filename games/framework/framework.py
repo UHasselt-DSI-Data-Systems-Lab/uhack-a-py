@@ -74,7 +74,38 @@ def input(key):
 def input_once(key):
     return backend.current_keys[key] and not backend.previous_keys[key]
 
+# Returns the current mouse position as a Vector
+def mouse_position():
+    x, y = pygame.mouse.get_pos()
+    y = backend.HEIGHT - y  # Invert y-axis to match traditional coordinate system
+    return Vector(x, y)
 
+# Returns True if the specified mouse button is currently held down (0 = left, 1 = middle, 2 = right)
+def input_mouse(button):
+    buttons = pygame.mouse.get_pressed()
+    return buttons[button]
+
+### Vector ###
+
+class Vector:
+    def __init__(self, x: float, y: float):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __mul__(self, other):
+        return Vector(self.x * other, self.y * other)
+    
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+    def normalize(self):
+        length = (self.x ** 2 + self.y ** 2) ** 0.5
+        if length == 0:
+            return Vector(0, 0)
+        return Vector(self.x / length, self.y / length)
 
 ### Drawing functions ###
 
@@ -84,7 +115,11 @@ def rectangle(x, y, w, h, color):
     pygame.draw.rect(backend.GAME_SURFACE, color, rect)
     return rect
 
-def circle(x, y, w, h, color):
+def circle(x, y, radius, color):
+    w = radius * 2
+    h = w
+    x = x - radius
+    y = y - radius
     y = backend.HEIGHT - y - h  # Invert y-axis to match traditional coordinate system
     rect = pygame.Rect(x, y, w, h)
     pygame.draw.ellipse(backend.GAME_SURFACE, color, rect)
@@ -167,8 +202,30 @@ def collide(obj1, obj2):
         offset = (obj2.get_rect().x - obj1.get_rect().x, obj2.get_rect().y - obj1.get_rect().y)
         return mask1.overlap(mask2, offset) is not None
 
-    return TypeError("Both objects must be either pygame.Rect or pygame.Surface instances.")
+    # If obj1 or obj2 is a Vector, and the other is a rectangle or image, treat the Vector as a point
+    elif isinstance(obj1, Vector) and (isinstance(obj2, pygame.Rect) or isinstance(obj2, pygame.Surface)):
+        # Convert vector's y to screen coordinates for collision
+        screen_y = backend.HEIGHT - obj1.y
+        point_rect = pygame.Rect(obj1.x, screen_y, 1, 1)
+        if isinstance(obj2, pygame.Rect):
+            return point_rect.colliderect(obj2)
+        else:  # obj2 is a Surface
+            mask2 = pygame.mask.from_surface(obj2)
+            offset = (point_rect.x - obj2.get_rect().x, point_rect.y - obj2.get_rect().y)
+            return mask2.overlap(pygame.mask.Mask((1, 1), fill=True), offset) is not None
 
+    elif isinstance(obj2, Vector) and (isinstance(obj1, pygame.Rect) or isinstance(obj1, pygame.Surface)):
+        # Convert vector's y to screen coordinates for collision
+        screen_y = backend.HEIGHT - obj2.y
+        point_rect = pygame.Rect(obj2.x, screen_y, 1, 1)
+        if isinstance(obj1, pygame.Rect):
+            return point_rect.colliderect(obj1)
+        else:  # obj1 is a Surface
+            mask1 = pygame.mask.from_surface(obj1)
+            offset = (int(point_rect.x - obj1.get_rect().x), int(point_rect.y - obj1.get_rect().y))
+            return mask1.overlap(pygame.mask.Mask((1, 1), fill=True), offset) is not None
+
+    return TypeError("Both objects must be either pygame.Rect or pygame.Surface instances.")
 
 # Check if a point is out of the screen bounds
 def out_of_screen(x, y):

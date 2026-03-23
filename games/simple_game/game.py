@@ -56,7 +56,7 @@ SCREEN_HEIGHT = 1080
 
 score = 0
 highscore = 0
-gameOver = False
+game_over = False
 
 player_position = [SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2]
 player_size = 100
